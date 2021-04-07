@@ -1,5 +1,6 @@
 <CsoundSynthesizer>
 <CsOptions>
+-Wo test.wav
 </CsOptions>
 ; ==============================================
 <CsInstruments>
