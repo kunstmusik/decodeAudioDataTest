@@ -1,0 +1,34 @@
+<html>
+  <head><title>decodeAudioData() test</title></head>
+  <body>
+      <h1>DecodeAudioData() test</h1>
+     
+  </body>
+        <script type="module">
+          const WebkitAudioContext = () => {
+            if (typeof window.webkitAudioContext !== "undefined") {
+              return window.webkitAudioContext;
+            } else if (typeof window.AudioContext !== "undefined") {
+              return window.AudioContext;
+            }
+          };
+
+          const a = new (WebkitAudioContext())();
+          const test = async () => {
+            const buffer = await (await fetch("test.mp3")).arrayBuffer();
+            a.decodeAudioData(buffer, (decoded) => {
+                 document.body.innerHTML += `<div>MP3: ${decoded.duration}, ${decoded.length}</div>`;
+            });
+
+          };
+
+          const test2 = async () => {
+            const buffer = await (await fetch("test.m4a")).arrayBuffer();
+            a.decodeAudioData(buffer, (decoded) => {
+                 document.body.innerHTML += `<div>M4A: ${decoded.duration}, ${decoded.length}</div>`;
+            });
+          };
+          test();
+          test2();
+        </script>
+</html>
