@@ -2,9 +2,18 @@
   <head><title>decodeAudioData() test</title></head>
   <body>
       <h1>DecodeAudioData() test</h1>
+
+      <h2>48kHz Wav</h2>
+      <div id="results48k"></div>
+
+      <h2>44.1 kHz Wav</h2>
+      <div id="results441k"></div>
      
   </body>
         <script type="module">
+          const res48 = document.querySelector("#results48k");
+          const res441 = document.querySelector("#results441k");
+
           const WebkitAudioContext = () => {
             if (typeof window.webkitAudioContext !== "undefined") {
               return window.webkitAudioContext;
@@ -14,35 +23,22 @@
           };
 
           const a = new (WebkitAudioContext())();
-          const test = async () => {
-            const buffer = await (await fetch("test.mp3")).arrayBuffer();
+          
+
+          const test = async(resDiv, file, type) => {
+            const buffer = await (await fetch(file)).arrayBuffer();
             a.decodeAudioData(buffer, (decoded) => {
-                 document.body.innerHTML += `<div>MP3: ${decoded.duration}, ${decoded.length}</div>`;
+                 resDiv.innerHTML += `<div>${type}: ${decoded.duration}, ${decoded.length}</div>`;
             });
 
-          };
+          }
 
-          const test2 = async () => {
-            const buffer = await (await fetch("test.m4a")).arrayBuffer();
-            a.decodeAudioData(buffer, (decoded) => {
-                 document.body.innerHTML += `<div>M4A: ${decoded.duration}, ${decoded.length}</div>`;
-            });
-          }          
+          test(res48, "test.mp3", "MP3");
+          test(res48, "test.m4a", "M4A");
+          test(res48, "test.wav", "WAV");
 
-
-          const test3 = async () => {
-
-            const buffer = await (await fetch("test.wav")).arrayBuffer();
-            a.decodeAudioData(buffer, (decoded) => {
-                 document.body.innerHTML += `<div>WAV: ${decoded.duration}, ${decoded.length}</div>`;
-            });
-
-          };
-
-;
-
-          test();
-          test2();
-          test3();
+          test(res441, "test441.mp3", "MP3");
+          test(res441, "test441.m4a", "M4A");
+          test(res441, "test441.wav", "WAV");
         </script>
 </html>
