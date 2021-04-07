@@ -27,8 +27,22 @@
             a.decodeAudioData(buffer, (decoded) => {
                  document.body.innerHTML += `<div>M4A: ${decoded.duration}, ${decoded.length}</div>`;
             });
+          }          
+
+
+          const test3 = async () => {
+
+            const buffer = await (await fetch("test.wav")).arrayBuffer();
+            a.decodeAudioData(buffer, (decoded) => {
+                 document.body.innerHTML += `<div>WAV: ${decoded.duration}, ${decoded.length}</div>`;
+            });
+
           };
+
+;
+
           test();
           test2();
+          test3();
         </script>
 </html>
